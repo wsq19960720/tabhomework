@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        li {
+            list-style: none;
+            display: flex;
+            margin: 20px;
+        }
+        
+        span {
+            width: 20px;
+            height: 20px;
+            background: #ccc;
+        }
+        
+        .active {
+            background: red;
+        }
+        
+        .quan {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="name">
+        <button @click="btnClick">提交</button>
+        <h3>正在进行</h3>
+        <ul>
+            <li v-for="(item,index) in list" :key="item.id">
+                <span :class="{'active':item.flag}" @click="btn(index)"></span>
+                <a>{{item.name}}</a>
+            </li>
+
+        </ul>
+
+        <h3>已经完成</h3>
+
+        <ul>
+            <li v-for="(item,index) in news" :key="item.id">
+                <span :class="{'active':item.flag}" @click="btns(index)"></span>
+                <a>{{item.name}}</a>
+            </li>
+        </ul>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                list: [{
+                    name: "111",
+                    flag: false
+                }],
+                news: []
+            },
+            methods: {
+                btn(index) {
+                    this.list[index].flag = !this.list[index].flag
+
+                    var aa = this.list.splice(index, 1)
+                    this.news.push({
+                        name: aa[0].name,
+                        flag: aa[0].flag
+                    })
+                },
+                btnClick() {
+                    this.list.push({
+                        name: this.name,
+                        flag: false
+
+                    })
+                },
+                btns(index) {
+                    this.news[index].flag = !this.news[index].flag
+
+                    var aa = this.news.splice(index, 1)
+                    this.list.push({
+                        name: aa[0].name,
+                        flag: aa[0].flag
+                    })
+                }
+
+            },
+            // computed: {
+            //     like() {
+            //         return datas = this.list.filter(item => item.flag)
+
+
+
+            //     },
+
+            // },
+
+        })
+    </script>
+</body>
+
+</html>
